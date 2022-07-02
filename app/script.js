@@ -4,8 +4,8 @@ import { render } from 'react-dom';
 class App extends React.Component {
   state = {
     timerOn: false,
-    timerStart: 4000,
-    timerTime: 4000, // 1200000 for 20 min. 20000 for 20 sec.
+    timerStart: 1200000,
+    timerTime: 1200000,
     timerRest: false,
     timerRestTime: 20000,
   };
@@ -14,7 +14,6 @@ class App extends React.Component {
     this.setState({
       timerOn: true,
       timerTime: this.state.timerTime,
-      // timerStart: this.state.timerTime,
     });
     this.timer = setInterval(() => {
       const newTime = this.state.timerTime - 10;
@@ -23,19 +22,15 @@ class App extends React.Component {
           timerTime: newTime,
         });
       } else if (!this.state.timerRest) {
-        // clearInterval(this.timer);
         this.setState({
           timerRest: true,
           timerTime: this.state.timerRestTime,
-          // timerStart: this.state.timerRestTime,
         });
         this.playBell();
       } else if (this.state.timerRest) {
-        // clearInterval(this.timer);
         this.setState({
           timerRest: false,
           timerTime: this.state.timerStart,
-          // timerStart: this.state.timerRestTime,
         });
         this.playBell();
       }
