@@ -4,15 +4,17 @@ import { render } from 'react-dom';
 class App extends React.Component {
   state = {
     timerOn: false,
-    timerStart: 0,
-    timerTime: 1200000,
+    timerStart: 4000,
+    timerTime: 2000, // 1200000 for 20 min. 20000 for 20 sec.
+    timerRest: false,
+    timerRestTime: 21000,
   };
 
   startTimer = () => {
     this.setState({
       timerOn: true,
       timerTime: this.state.timerTime,
-      timerStart: this.state.timerTime,
+      // timerStart: this.state.timerTime,
     });
     this.timer = setInterval(() => {
       const newTime = this.state.timerTime - 10;
@@ -20,10 +22,20 @@ class App extends React.Component {
         this.setState({
           timerTime: newTime,
         });
-      } else {
-        clearInterval(this.timer);
-        this.setState({ timerOn: false });
-        alert('Countdown ended');
+      } else if (!this.state.timerRest) {
+        // clearInterval(this.timer);
+        this.setState({
+          timerRest: true,
+          timerTime: this.state.timerRestTime,
+          // timerStart: this.state.timerRestTime,
+        });
+      } else if (this.state.timerRest) {
+        // clearInterval(this.timer);
+        this.setState({
+          timerRest: false,
+          timerTime: this.state.timerStart,
+          // timerStart: this.state.timerRestTime,
+        });
       }
     }, 10);
   };
@@ -69,7 +81,7 @@ class App extends React.Component {
             Start
           </button>
         )}
-        {timerOn === true && timerTime >= 1000 && (
+        {timerOn === true && (
           <button className='btn' onClick={this.stopTimer}>
             Stop
           </button>
