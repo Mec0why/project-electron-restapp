@@ -29,6 +29,7 @@ class App extends React.Component {
           timerTime: this.state.timerRestTime,
           // timerStart: this.state.timerRestTime,
         });
+        this.playBell();
       } else if (this.state.timerRest) {
         // clearInterval(this.timer);
         this.setState({
@@ -36,6 +37,7 @@ class App extends React.Component {
           timerTime: this.state.timerStart,
           // timerStart: this.state.timerRestTime,
         });
+        this.playBell();
       }
     }, 10);
   };
@@ -51,6 +53,11 @@ class App extends React.Component {
 
   closeApp = () => {
     window.close();
+  };
+
+  playBell = () => {
+    const bell = new Audio('./sounds/bell.wav');
+    bell.play();
   };
 
   render() {
